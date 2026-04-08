@@ -72,6 +72,18 @@ class CharactersLocalSource {
     return db.query(_tableCache, where: 'page = ?', whereArgs: [page]);
   }
 
+  Future<bool> hasCachedPage(int page) async {
+    final db = await _database;
+    final result = await db.query(
+      _tableCache,
+      columns: ['id'],
+      where: 'page = ?',
+      whereArgs: [page],
+      limit: 1,
+    );
+    return result.isNotEmpty;
+  }
+
   // --- Favorites ---
 
   Future<List<Map<String, dynamic>>> getFavorites() async {

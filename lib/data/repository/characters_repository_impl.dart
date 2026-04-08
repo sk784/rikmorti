@@ -36,9 +36,10 @@ class CharactersRepositoryImpl implements CharactersRepository {
     } catch (_) {
       final cached = await _local.getCachedCharacters(page);
       if (cached.isEmpty) rethrow;
+      final hasMore = await _local.hasCachedPage(page + 1);
       return (
         characters: cached.map(_mapper.fromMap).toList(),
-        hasMore: false,
+        hasMore: hasMore,
       );
     }
   }
